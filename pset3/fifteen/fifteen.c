@@ -37,6 +37,8 @@ void draw(void);
 bool move(int tile);
 bool won(void);
 
+int temp;
+
 int main(int argc, string argv[])
 {
     // ensure proper usage
@@ -173,6 +175,7 @@ void init(void)
         board[d-1][d-3] = 1;
         board[d-1][d-2] = 2;
     }
+    
 }
 
 /**
@@ -185,7 +188,7 @@ void draw(void)
     {
         for (int n = 0; n < d; n++)
         {
-            if (m == (d - 1) && n == (d -1))
+            if (board[m][n] == 0)
             {
                 printf("  _ ");
             }
@@ -204,9 +207,50 @@ void draw(void)
  */
 bool move(int tile)
 {
-    // TODO
+    // find tile location by tile number
+    for (int q = 0; q < d; q++)
+    {
+        for (int r = 0; r < d; r++)
+        {
+            if (tile == board[q][r])
+            {
+                // edit board array
+                if (r < (d - 1) && board[q][r + 1] == 0)
+                {
+                    board[q][r] = 0;
+                    board[q][r + 1] = temp;
+                    return true;
+                    //won();
+                }
+                if (r > 0 && board[q][r - 1] == 0)
+                {
+                    board[q][r] = 0;
+                    board[q][r - 1] = temp;
+                    return true;
+                    //won();  
+                }
+                if (q < (d - 1) && board[q + 1][r] == 0)
+                {
+                    board[q][r] = 0;
+                    board[q + 1][r] = temp;
+                    return true;
+                    //won();    
+                }
+                if (q > 0 && board[q - 1][r] == 0)
+                {
+                    board[q][r] = 0;
+                    board[q - 1][r] = temp;
+                    return true;
+                    //won();                    
+                }
+            }
+        }
+    }
+
+    
     return false;
 }
+
 
 /**
  * Returns true if game is won (i.e., board is in winning configuration), 
@@ -214,6 +258,8 @@ bool move(int tile)
  */
 bool won(void)
 {
-    // TODO
+    // return true if game is won and false if not. game is won when titles are in increasing order left to right, top to bottom
+    // iterate over board and check values, if value is incorrect return false
+    // return true once all values check and correct
     return false;
 }
