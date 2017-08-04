@@ -37,7 +37,6 @@ void draw(void);
 bool move(int tile);
 bool won(void);
 
-int temp;
 
 int main(int argc, string argv[])
 {
@@ -218,36 +217,34 @@ bool move(int tile)
                 if (r < (d - 1) && board[q][r + 1] == 0)
                 {
                     board[q][r] = 0;
-                    board[q][r + 1] = temp;
+                    board[q][r + 1] = tile;
+                    won();
                     return true;
-                    //won();
                 }
                 if (r > 0 && board[q][r - 1] == 0)
                 {
                     board[q][r] = 0;
-                    board[q][r - 1] = temp;
+                    board[q][r - 1] = tile;
+                    won();
                     return true;
-                    //won();  
                 }
                 if (q < (d - 1) && board[q + 1][r] == 0)
                 {
                     board[q][r] = 0;
-                    board[q + 1][r] = temp;
+                    board[q + 1][r] = tile;
+                    won();
                     return true;
-                    //won();    
                 }
                 if (q > 0 && board[q - 1][r] == 0)
                 {
                     board[q][r] = 0;
-                    board[q - 1][r] = temp;
+                    board[q - 1][r] = tile;
+                    won();
                     return true;
-                    //won();                    
                 }
             }
         }
     }
-
-    
     return false;
 }
 
@@ -258,8 +255,25 @@ bool move(int tile)
  */
 bool won(void)
 {
-    // return true if game is won and false if not. game is won when titles are in increasing order left to right, top to bottom
-    // iterate over board and check values, if value is incorrect return false
-    // return true once all values check and correct
+    int counter = 1;
+    
+    for (int y = 0; y < d; y++)
+    {
+        for (int z = 0; z < d; z++)
+        {
+            if (board[y][z] == counter)
+            {
+                counter++;
+                if (counter == (d * d))
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                counter = 1;
+            }
+        }
+    }
     return false;
 }
